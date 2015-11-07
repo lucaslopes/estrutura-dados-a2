@@ -7,7 +7,11 @@ Desenvolver uma solução para controle de estoque de peças de certa auto-peça
 - Vetor ou Arquivo: (0,5p)
 - Estruturas especiais de conjunto e tipos especiais: (1,0)
 - Menu de opção com três operações (Inclusão, Consulta e Alteração): (1,0p)
-- Utilizar na infraestrutura do controle de peças uma das estruturas de dados (Lista, Pilha, Fila ou Árvore): (4,0p)
+- Utilizar na infraestrutura do controle de peças uma das estruturas (Lista, Pilha, Fila ou Árvore): (4,0p)
 - Utilizar em alguma parte do programa caracteres gráficos: (0,5p)
 
-- Total: 10 pontos
+Algumas informações adicionais:
+
+- Valor total da atividade: 10 pontos
+- Prazo para entrega: 01/12/2015
+- Dupla do projeto: Lucas Lopes e Amarildo Lucas
