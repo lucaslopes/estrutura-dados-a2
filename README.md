@@ -14,4 +14,4 @@ Algumas informações adicionais:
 
 - Valor total da atividade: 10 pontos
 - Prazo para entrega: 01/12/2015
-- Dupla do projeto: Lucas Lopes e Amarildo Lucas
+- Dupla do projeto: Lucas Lopes, Amarildo Lucas e  Bruno Lopes
