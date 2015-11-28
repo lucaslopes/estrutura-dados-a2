@@ -6,73 +6,146 @@
 
 //Estrutura do estoque
 typedef struct estoque {
-    char nome[20];
-    int codigo;
+    char codigo[10];
+	char nome[40];
+	char marca[30];
+	int quantidade;
+    float preco;    
 } estoque;
 
-//Variaveis globais
+//Varivaies globais
 FILE *arq;
 estoque peca;
 
-//Retornar alguma opcao do menu
-char menu() {
+//Apresentacao do Trabalho
+void apresentacao() {
+	system("cls");
+    printf("\n");
+    printf("************* Trabalho da A2 *************\n\n");
+    
+    printf("Materia\n\n");
+    printf("   Estrutura de Dados\n\n");
+    
+    printf("Professor\n\n");
+    printf("   Alfredo Boente\n\n");
+    
+    printf("Integrantes\n\n");
+    printf("   Amarildo Lucas\n");
+    printf("   Bruno Lopes de Mello\n");
+    printf("   Lucas Lopes Felipe\n\n");    
+}
+
+//Menu Principal
+char menu_principal() {
     system("cls");
     printf("\n");
     printf("************* Menu de Opcoes *************\n\n");
+    printf(" Menu Principal >\n\n");
     printf("   [1] - Adicionar uma nova peca - [1]\n");
-    printf("   [2] -   Consultar o Estoque   - [2]\n");
-    printf("   [3] -   Procurar alguma peca  - [3]\n");
-    printf("   [4] -   Alterar alguma peca   - [4]\n");
-    printf("   [5] -    Remover uma peca     - [5]\n");
-    printf("\n");
-    printf("   [0] -          Sair           - [0]\n");
-    printf("\n> ");
+    printf("   [2] -    Fazer uma consulta   - [2]\n");
+    printf("   [3] -   Alterar alguma peca   - [3]\n\n");
+    printf("   [0] -          Sair           - [0]\n\n");
+    printf("> ");
     return (toupper(getche()));
 }
 
-//Verificar se já existe uma peca, retornando 1
-    int verifica (char nome[]) {
+//Menu de Consulta
+char menu_consultar() {
+    system("cls");
+    printf("\n");
+    printf("************* Menu de Opcoes *************\n\n");
+    printf(" Menu Principal > Consultar\n\n");
+    printf("   [1] -  Listar todo o estoque  - [1]\n");
+    printf("   [2] -   Procurar por Codigo   - [2]\n");
+    printf("   [3] -    Procurar por Nome    - [3]\n");
+    printf("   [4] -   Procurar por Marca    - [4]\n\n");    
+    printf("   [0] -         Voltar          - [0]\n\n");
+    printf("> ");
+    return (toupper(getche()));
+}
+
+//Menu de Alteracao
+char menu_alterar() {
+    system("cls");
+    printf("\n");
+    printf("************* Menu de Opcoes *************\n\n");
+    printf(" Menu Principal > Alterar\n\n");
+    printf("   [1] -   Alterar o Codigo   - [1]\n");
+    printf("   [2] -    Alterar o Nome    - [2]\n");
+    printf("   [3] -   Alterar a Marca    - [3]\n");
+    printf("   [4] - Alterar a Quantidade - [4]\n");
+    printf("   [5] -   Alterar o Preco    - [5]\n\n");
+    printf("   [0] -        Voltar        - [0]\n\n");
+    printf("> ");
+    return (toupper(getche()));
+}
+
+//Verificar se já existe o codigo de uma peca, retornando 1
+    int verifica(char codigo[]) {
     while (fread(&peca, sizeof(estoque), 1, arq))
-    if (!strcmp(peca.nome, nome))
-    return 1;
+    if (!strcmp(peca.codigo, codigo))
+    	return 1;
     return 0;
     }
 
 //Verificar se já existe o codigo de uma peca, retornando 1
-int verifica_cod(int num) {
+int verifica_num(int num) {
     fread(&peca,sizeof(estoque),1,arq);
-    while(!feof(arq))     {
-        if (peca.codigo == num)         {
+    while(!feof(arq)) {
+        if (peca.quantidade == num) {
             fseek(arq,-sizeof(estoque),SEEK_CUR);
             return 1;
-        }
-        fread(&peca,sizeof(estoque),1,arq);
-    }
-    return 0;
+        } fread(&peca,sizeof(estoque),1,arq);
+    } return 0;
 }
 
 //Adicionar uma nova peca ao estoque
 void adicionar_peca() {
+	char codigo[10];
+
+    arq = fopen("banco.bin","a+b");
+    if (arq == NULL) {
+        printf("Erro ao abrir arquivo.\n");
+        return;
+    }
+
+    system("cls");
+    printf("\n************* Adicionar Peca *************\n\n");
+    printf(" Menu Principal > Adicionar\n\n\n");
 	
+	printf("Digite o codigo da peca: ");
+    fflush(stdin);
+    gets(codigo);
+
+    if (verifica(codigo) == 1) {
+        printf("\nEsta peca ja foi registrada.\n");
+    } else {
+        strcpy(peca.codigo,codigo);
+        printf("Nome da peca: ");
+        scanf("%c", &peca.nome);
+        fwrite(&peca,sizeof(estoque),1,arq);        
+        
+        printf("Marca do fabricante: ");
+        scanf("%c", &peca.marca);
+        fwrite(&peca,sizeof(estoque),1,arq);        
+        
+        printf("Quantidade de pecas: ");
+        scanf("%d", &peca.quantidade);
+        fwrite(&peca,sizeof(estoque),1,arq);
+        
+        printf("Preco unitario: ");
+        scanf("%f", &peca.preco);
+        fwrite(&peca,sizeof(estoque),1,arq);
+    } fclose(arq);
 }
 
 //Modificar uma peca do estoque
-void alterar_peca() {
+void consultar() {
 	
 }
 
 //Remover uma peca do estoque
-void remover_peca() {
-	
-}
-
-//Procurar uma peca no estoque
-void procura_peca() {
-	
-}
-
-//Mostrar o estoque
-void consultar_estoque() {
+void alterar() {
 	
 }
 
@@ -80,16 +153,15 @@ void consultar_estoque() {
 int main() {
     char op;
     do {
-        op = menu();
+        op = menu_principal();
         switch(op) {
             case '1': adicionar_peca(); break;
-            case '2': consultar_estoque(); break;
-            case '3': procura_peca(); break;
-            case '4': alterar_peca(); break;
-            case '5': remover_peca(); break;
+            case '2': consultar(); break;
+            case '3': alterar(); break;
         }
         printf("\n");
         system("PAUSE");
     } while (op != '0');
+    apresentacao();
     return 0;
 }
