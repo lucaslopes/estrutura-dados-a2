@@ -25,6 +25,7 @@ typedef struct estoque {
 //Varivaies globais
 FILE *arq;
 estoque peca;
+int opcao; //variável para entrada de opção nos menus.
 
 //Apresentacao do Trabalho
 void apresentacao() {
@@ -45,7 +46,7 @@ void apresentacao() {
 }
 
 //Menu Principal
-char menu_principal() {
+int menu_principal() {
     system("cls");
     printf("\n");
     printf("************* Menu de Opcoes *************\n\n");
@@ -55,11 +56,12 @@ char menu_principal() {
     printf("   [3] -   Alterar alguma peca   - [3]\n\n");
     printf("   [0] -          Sair           - [0]\n\n");
     printf("> ");
-    return (toupper(getche()));
+    scanf("%d", opcao);
+    return opcao;
 }
 
 //Menu de Consulta
-char menu_consultar() {
+int menu_consultar() {
     system("cls");
     printf("\n");
     printf("************* Menu de Opcoes *************\n\n");
@@ -70,11 +72,12 @@ char menu_consultar() {
     printf("   [4] -   Procurar por Marca    - [4]\n\n");    
     printf("   [0] -         Voltar          - [0]\n\n");
     printf("> ");
-    return (toupper(getche()));
+    scanf("%d", opcao);
+    return opcao;
 }
 
 //Menu de Alteracao
-char menu_alterar() {
+int menu_alterar() {
     system("cls");
     printf("\n");
     printf("************* Menu de Opcoes *************\n\n");
@@ -86,7 +89,8 @@ char menu_alterar() {
     printf("   [5] -   Alterar o Preco    - [5]\n\n");
     printf("   [0] -        Voltar        - [0]\n\n");
     printf("> ");
-    return (toupper(getche()));
+    scanf("%d", opcao);
+    return opcao;
 }
 
 //Verificar se já existe o codigo de uma peca, retornando 1
