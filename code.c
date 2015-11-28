@@ -4,14 +4,14 @@
 #include <conio.h>
 #include <string.h>
 
-//Protótipos
-void apresentacao();
-char menu_principal();
-char menu_consultar();
-char menu_alterar();
+//Prototipos
+int menu_principal();
+int menu_consultar();
+int menu_alterar();
 void adicionar_peca();
 void consultar();
 void alterar();
+void apresentacao();
 
 //Estrutura do estoque
 typedef struct estoque {
@@ -25,25 +25,9 @@ typedef struct estoque {
 //Varivaies globais
 FILE *arq;
 estoque peca;
-int opcao; //variável para entrada de opção nos menus.
+int opcao; //variavel para entrada de opcao nos menus
 
-//Apresentacao do Trabalho
-void apresentacao() {
-	system("cls");
-    printf("\n");
-    printf("************* Trabalho da A2 *************\n\n");
-    
-    printf("Materia\n\n");
-    printf("   Estrutura de Dados\n\n");
-    
-    printf("Professor\n\n");
-    printf("   Alfredo Boente\n\n");
-    
-    printf("Integrantes\n\n");
-    printf("   Amarildo Lucas\n");
-    printf("   Bruno Lopes de Mello\n");
-    printf("   Lucas Lopes Felipe\n\n");    
-}
+//################################################## MENUS ##################################################
 
 //Menu Principal
 int menu_principal() {
@@ -93,6 +77,8 @@ int menu_alterar() {
     return opcao;
 }
 
+//################################################## FUNCOES DE VERIFICACAO ##################################################
+
 //Verificar se já existe o codigo de uma peca, retornando 1
     int verifica(char codigo[]) {
     while (fread(&peca, sizeof(estoque), 1, arq))
@@ -111,6 +97,8 @@ int verifica_num(int num) {
         } fread(&peca,sizeof(estoque),1,arq);
     } return 0;
 }
+
+//################################################## FUNCAO ADICIONAR ##################################################
 
 //Adicionar uma nova peca ao estoque
 void adicionar_peca() {
@@ -152,15 +140,109 @@ void adicionar_peca() {
     } fclose(arq);
 }
 
+//################################################## FUNCAO CONSULTAR ##################################################
+
+//Uma das opcoes do menu Consultar, mostra todos
+void consultar_tudo() {
+	
+}
+
+//Uma das opcoes do menu Consultar, busca por codigo
+void consultar_codigo() {
+	
+}
+
+//Uma das opcoes do menu Consultar, busca por nome
+void consultar_nome() {
+	
+}
+
+//Uma das opcoes do menu Consultar, busca por marca
+void consultar_marca() {
+	
+}
+
 //Modificar uma peca do estoque
 void consultar() {
+	int op_cons;
+    do {
+        op_cons = menu_alterar();
+        switch(op_cons) {
+            case 1: consultar_tudo(); break;
+            case 2: consultar_codigo(); break;
+            case 3: consultar_nome(); break;
+			case 4: consultar_marca(); break;
+        }
+        printf("\n");
+        system("PAUSE");
+    } while (op_cons != '0');
+}
+
+//################################################## FUNCAO ALTERAR ##################################################
+
+//Uma das opcoes do menu Alterar, muda o codigo
+void alterar_codigo() {
+	
+}
+
+//Uma das opcoes do menu Alterar, muda o nome
+void alterar_nome() {
+	
+}
+
+//Uma das opcoes do menu Alterar, muda a marca
+void alterar_marca() {
+	
+}
+
+//Uma das opcoes do menu Alterar, muda a quantidade
+void alterar_quantidade() {
+	
+}
+
+//Uma das opcoes do menu Alterar, muda o preco
+void alterar_preco() {
 	
 }
 
 //Remover uma peca do estoque
 void alterar() {
-	
+	int op_alt;
+    do {
+        op_alt = menu_alterar();
+        switch(op_alt) {
+            case 1: alterar_codigo(); break;
+            case 2: alterar_nome(); break;
+            case 3: alterar_marca(); break;
+			case 4: alterar_quantidade(); break;
+			case 5: alterar_preco(); break;
+        }
+        printf("\n");
+        system("PAUSE");
+    } while (op_alt != '0');
 }
+
+//################################################## OUTRAS INFORMACOES ##################################################
+
+//Apresentacao do Trabalho
+void apresentacao() {
+	system("cls");
+    printf("\n");
+    printf("************* Trabalho da A2 *************\n\n");
+    
+    printf("Materia\n\n");
+    printf("   Estrutura de Dados\n\n");
+    
+    printf("Professor\n\n");
+    printf("   Alfredo Boente\n\n");
+    
+    printf("Integrantes\n\n");
+    printf("   Amarildo Lucas\n");
+    printf("   Bruno Lopes de Mello\n");
+    printf("   Lucas Lopes Felipe\n\n");    
+}
+
+//################################################## FUNCAO PRINCIPAL ##################################################
 
 //Funcao principal
 int main() {
