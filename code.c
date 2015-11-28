@@ -164,13 +164,13 @@ void alterar() {
 
 //Funcao principal
 int main() {
-    char op;
+    int op;
     do {
         op = menu_principal();
         switch(op) {
-            case '1': adicionar_peca(); break;
-            case '2': consultar(); break;
-            case '3': alterar(); break;
+            case 1: adicionar_peca(); break;
+            case 2: consultar(); break;
+            case 3: alterar(); break;
         }
         printf("\n");
         system("PAUSE");
