@@ -4,6 +4,15 @@
 #include <conio.h>
 #include <string.h>
 
+//Protótipos
+void apresentacao();
+char menu_principal();
+char menu_consultar();
+char menu_alterar();
+void adicionar_peca();
+void consultar();
+void alterar();
+
 //Estrutura do estoque
 typedef struct estoque {
     char codigo[10];
