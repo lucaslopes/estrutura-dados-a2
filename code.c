@@ -166,12 +166,12 @@ void consultar_marca() {
 void consultar() {
 	int op_cons;
     do {
-        op_cons = menu_alterar();
+        op_cons = menu_consultar();
         switch(op_cons) {
             case 1: consultar_tudo(); break;
             case 2: consultar_codigo(); break;
             case 3: consultar_nome(); break;
-			case 4: consultar_marca(); break;
+	    case 4: consultar_marca(); break;
         }
         printf("\n");
         system("PAUSE");
