@@ -1,6 +1,6 @@
 #include <stdio.h>
-//#include <stdlib.h>
-//#include <ctype.h>
+#include <stdlib.h>
+#include <ctype.h>
 //#include <conio.h>
 #include <string.h>
 
@@ -142,24 +142,38 @@ int menu_alterar() {
 // Adicionar uma nova peca ao estoque
 void adicionar_peca() {
   
-	printf("Digite o codigo da peca: ");
+  char codigo [10];
+  
+	printf("Digite o numero de serie ou codigo da peca: ");
   fflush(stdin);
-  gets(meuEstoque.codigo);
-  gets(meuEstoque.nome);
+  gets(codigo);
+  strcpy(meuEstoque.codigo, codigo);
+  
+  printf("Nome da peca: ");
+  scanf("%s", meuEstoque.nome);
+  
+  printf("Marca do fabricante: ");
+  scanf("%s", meuEstoque.marca);
+ 
+  printf("Quantidade de pecas: ");
+  scanf("%d", &meuEstoque.quantidade);
 
+  printf("Preco unitario: ");
+  scanf("%f", &meuEstoque.preco);
+  
   if (enqueue(&minhaAutoPecas, meuEstoque)) {
-      printf("Peca %s incluida com sucesso. \n", meuEstoque.nome);
+      printf("Peca com codigo %s foi incluida com sucesso. \n", meuEstoque.codigo);
   }
   else {
     printf("Fila cheia. Nao ha espaco suficiente.");
   }
 }
 
-pestoque primeiro(pfila f) {
+/*pestoque primeiro(pfila f) {
   if (f.final > -1) {
     return f.base_dados[f.inicio];
   }
-}
+}*/
 
 void consulta_codigo(pfila f, char codigo []) {
   while (f.final >= f.inicio) {
@@ -174,6 +188,22 @@ void consulta_codigo(pfila f, char codigo []) {
     }
     
     f.inicio++;
+  }
+}
+
+void lista_pecas(pfila f) {
+  
+  if (f.final > -1) {
+    while (f.final >= f.inicio) {
+      printf("Posicao: %d \n", f.inicio + 1);
+      printf("Codigo: %s \n", f.base_dados[f.inicio].codigo);
+      printf("Nome: %s \n", f.base_dados[f.inicio].nome);
+      
+      f.inicio++;
+    }
+  }
+  else {
+    printf("Nao existe nenhum dado no estoque. Fila vazia.");
   }
 }
 
@@ -195,6 +225,10 @@ void consultar() {
     op_cons = menu_consultar();
     switch(op_cons) {
       case 1:
+        lista_pecas(minhaAutoPecas);
+        break;
+      
+      case 2:
         printf("Procurar por codigo da peca: \n");
         char codigo [10];
         fflush(stdin);
