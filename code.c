@@ -115,7 +115,6 @@ int menu_consultar() {
   printf("   [1] -  Listar todo o estoque  - [1]\n");
   printf("   [2] -   Procurar por Codigo   - [2]\n");
   printf("   [3] -    Procurar por Nome    - [3]\n");
-  printf("   [4] -   Procurar por Marca    - [4]\n\n");    
   printf("   [0] -         Voltar          - [0]\n\n");
   printf("> ");
   scanf("%d", &opcao);
@@ -129,10 +128,6 @@ int menu_alterar() {
   printf("************* Menu de Opcoes *************\n\n");
   printf(" Menu Principal > Alterar\n\n");
   printf("   [1] -   Alterar o Codigo   - [1]\n");
-  printf("   [2] -    Alterar o Nome    - [2]\n");
-  printf("   [3] -   Alterar a Marca    - [3]\n");
-  printf("   [4] - Alterar a Quantidade - [4]\n");
-  printf("   [5] -   Alterar o Preco    - [5]\n\n");
   printf("   [0] -        Voltar        - [0]\n\n");
   printf("> ");
   scanf("%d", &opcao);
@@ -202,16 +197,23 @@ void consulta_nome(pfila f, char nome []) {
   }
 }
 
+
 void alterar_codigo(pfila f, char codigo []) {
   while (f.final >= f.inicio) {
     if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
       
-      
-      
+      char novo_codigo [10];
+      fflush(stdin);
+      printf("Digite o novo codigo da peca: \n");
+      //scanf ("%[^\n]%*c", meuEstoque.codigo);
+      fflush(stdin);
+      fgets(novo_codigo, 10, stdin);
+      strcpy(f.base_dados[f.inicio].codigo, novo_codigo);
+      printf("Codigo alterado com sucesso.");
       break;
     }
     else {
-      printf("Codigo nao existe.");
+      printf("Codigo nao foi encontrado.");
     }
     
     f.inicio++;
@@ -259,7 +261,7 @@ void consultar() {
         printf("Procurar por codigo da peca: \n");
         char codigo [10];
         fflush(stdin);
-        gets(codigo);
+        fgets(codigo, 10, stdin);
         consulta_codigo(minhaAutoPecas, codigo);
         break;
         
@@ -273,6 +275,25 @@ void consultar() {
     }
     printf("\n");
   } while (op_cons != 0);
+}
+
+// Consultar uma peca do estoque
+void alterar() {
+  int op_alt;
+  do {
+    op_alt = menu_alterar();
+    switch(op_alt) {
+      case 1:
+        printf("Procurar por codigo da peca: \n");
+        char codigo [10];
+        fflush(stdin);
+        fgets(codigo, 10, stdin);
+        alterar_codigo(minhaAutoPecas, codigo);
+        break;
+        
+    }
+    printf("\n");
+  } while (op_alt != 0);
 }
 
 // Apresentacao do Trabalho
@@ -305,7 +326,7 @@ int main() {
       switch(op) {
           case 1: adicionar_peca(); break;
           case 2: consultar(); break;
-          case 3: /*alterar();*/ break;
+          case 3: alterar(); break;
       }
       printf("\n");
       //system("PAUSE");
