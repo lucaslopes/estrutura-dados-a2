@@ -155,6 +155,12 @@ void adicionar_peca() {
   }
 }
 
+pestoque primeiro(pfila f) {
+  if (f.final > -1) {
+    return f.base_dados[f.inicio];
+  }
+}
+
 void consulta_codigo(pfila f, char codigo []) {
   while (f.final >= f.inicio) {
     if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
@@ -162,6 +168,9 @@ void consulta_codigo(pfila f, char codigo []) {
       printf("Posicao... %d \n", f.inicio + 1);
       
       break;
+    }
+    else {
+      printf("Codigo nao existe.");
     }
     
     f.inicio++;
@@ -177,6 +186,24 @@ void remove_peca() {
   else {
     printf("Fila vazia. Nao existe nenhuma peca.");
   }
+}
+
+// Consultar uma peca do estoque
+void consultar() {
+  int op_cons;
+  do {
+    op_cons = menu_consultar();
+    switch(op_cons) {
+      case 1:
+        printf("Procurar por codigo da peca: \n");
+        char codigo [10];
+        fflush(stdin);
+        gets(codigo);
+        consulta_codigo(minhaAutoPecas, codigo);
+        break;
+    }
+    printf("\n");
+  } while (op_cons != 0);
 }
 
 // Apresentacao do Trabalho
