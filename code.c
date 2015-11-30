@@ -155,6 +155,19 @@ void adicionar_peca() {
   }
 }
 
+void consulta_codigo(pfila f, char codigo []) {
+  while (f.final >= f.inicio) {
+    if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
+      printf("Codigo encontrado... %s \n", f.base_dados[f.inicio].codigo);
+      printf("Posicao... %d \n", f.inicio + 1);
+      
+      break;
+    }
+    
+    f.inicio++;
+  }
+}
+
 // Remove uma nova peca ao estoque
 void remove_peca() {
 
@@ -195,7 +208,7 @@ int main() {
       op = menu_principal();
       switch(op) {
           case 1: adicionar_peca(); break;
-          case 2: /*consultar();*/ break;
+          case 2: consultar(); break;
           case 3: /*alterar();*/ break;
       }
       printf("\n");
