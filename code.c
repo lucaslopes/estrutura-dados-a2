@@ -143,22 +143,23 @@ int menu_alterar() {
 void adicionar_peca() {
   
   char codigo [10];
-  
-	printf("Digite o numero de serie ou codigo da peca: ");
   fflush(stdin);
-  gets(codigo);
+	printf("Digite o numero de serie ou codigo da peca: \n");
+  //scanf ("%[^\n]%*c", meuEstoque.codigo);
+  fflush(stdin);
+  fgets(codigo, 10, stdin);
   strcpy(meuEstoque.codigo, codigo);
   
-  printf("Nome da peca: ");
+  printf("Nome da peca: \n");
   scanf("%s", meuEstoque.nome);
   
-  printf("Marca do fabricante: ");
+  printf("Marca do fabricante: \n");
   scanf("%s", meuEstoque.marca);
  
-  printf("Quantidade de pecas: ");
+  printf("Quantidade de pecas: \n");
   scanf("%d", &meuEstoque.quantidade);
 
-  printf("Preco unitario: ");
+  printf("Preco unitario: \n");
   scanf("%f", &meuEstoque.preco);
   
   if (enqueue(&minhaAutoPecas, meuEstoque)) {
@@ -169,17 +170,43 @@ void adicionar_peca() {
   }
 }
 
-/*pestoque primeiro(pfila f) {
-  if (f.final > -1) {
-    return f.base_dados[f.inicio];
-  }
-}*/
-
 void consulta_codigo(pfila f, char codigo []) {
   while (f.final >= f.inicio) {
     if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
       printf("Codigo encontrado... %s \n", f.base_dados[f.inicio].codigo);
       printf("Posicao... %d \n", f.inicio + 1);
+      
+      break;
+    }
+    else {
+      printf("Codigo nao existe.");
+    }
+    
+    f.inicio++;
+  }
+}
+
+void consulta_nome(pfila f, char nome []) {
+  while (f.final >= f.inicio) {
+    if (strcmp (nome, f.base_dados[f.inicio].nome) == 0) {
+      printf("Nome: %s \n", f.base_dados[f.inicio].nome);
+      printf("Posicao... %d \n", f.inicio + 1);
+      
+      break;
+    }
+    else {
+      printf("Nome da peca nao existe.");
+    }
+    
+    f.inicio++;
+  }
+}
+
+void alterar_codigo(pfila f, char codigo []) {
+  while (f.final >= f.inicio) {
+    if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
+      
+      
       
       break;
     }
@@ -234,6 +261,14 @@ void consultar() {
         fflush(stdin);
         gets(codigo);
         consulta_codigo(minhaAutoPecas, codigo);
+        break;
+        
+      case 3:
+        printf("Procurar por nome da peca: \n");
+        char nome [20];
+        fflush(stdin);
+        fgets(nome, 20, stdin);
+        consulta_nome(minhaAutoPecas, nome);
         break;
     }
     printf("\n");
