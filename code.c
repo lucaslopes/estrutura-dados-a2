@@ -422,7 +422,7 @@ void alterar() {
         	}
 			printf("\n");
 			system("PAUSE");
-    	} while (op_alt != '0');
+    	} while (op_alt != 0);
     } else {
         printf("\nEsta peca nao existe.\n");
 	}
@@ -462,7 +462,7 @@ int main() {
         }
         printf("\n");
         system("PAUSE");
-    } while (op != '0');
+    } while (op != 0);
     apresentacao();
     return 0;
 }
