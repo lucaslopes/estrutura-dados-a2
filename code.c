@@ -1,16 +1,16 @@
+// Bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <conio.h>
 #include <string.h>
 
-#define MAX 20
+#define MAX 20 // Variavel Fixa
 
 // Prototipos
 int menu_principal();
 int menu_consultar();
 int menu_alterar();
-
 void adicionar();
 void consultar();
 void alterar();
@@ -31,57 +31,13 @@ typedef struct fila {
 	pestoque base_dados[MAX];
 } pfila;
 
-int opcao; //variavel para entrada de opcao nos menus
-int op;
+// Variaveis Globais
 pfila minhaAutoPecas;
 pestoque meuEstoque;
+int op;
+int opcao; // Variavel para entrada de opcao nos menus
 
-// Inicializa os elementos da fila
-void inicializa(pfila *f) {
-	f->inicio = 0;
-	f->final= -1;
-	f->qtd = 0;
-}
-
-// Verifica se a fila esta cheia
-int cheia(pfila *f) {
-	if (f->qtd ==  MAX) {
-		return 1;
-	} else {
-		return 0;
-}}
-
-// Verifica se a fila esta vazia
-int vazia (pfila *f) {
-	if (f->qtd==0) {
-		return 1;
-	} else {
-		return 0;
-}}
-
-// Adiciona um elemento na fila
-int enqueue(pfila *f, pestoque t) {
-	if (cheia(f)) {
-		return 0;
-	} else {
-		f->final++;
-		f->base_dados[f->final] = t;
-		f->qtd++;
-		return 1;
-}}
-
-// Remove um elemento da fila
-int dequeue(pfila *f, pestoque *t) {
-	if (vazia(f)) {
-		return 0;
-	} else {
-		*t = f->base_dados[f->inicio];
-		f->inicio++;
-		f->qtd--;
-		return 1;
-}}
-
-//################################################## MENUS ##################################################
+//########################################################## MENUS ###########################################################
 
 //Menu Principal
 int menu_principal() {
@@ -126,6 +82,57 @@ int menu_alterar() {
 	return opcao;
 }
 
+//################################################## FUNCOES DE VERIFICACAO ##################################################
+
+// Verifica se a fila esta cheia
+int cheia(pfila *f) {
+	if (f->qtd ==  MAX) {
+		return 1;
+	} else {
+		return 0;
+}}
+
+// Verifica se a fila esta vazia
+int vazia (pfila *f) {
+	if (f->qtd==0) {
+		return 1;
+	} else {
+		return 0;
+}}
+
+//################################################### MANIPULACOES NA FILA ###################################################
+
+// Inicializa os elementos da fila
+void inicializa(pfila *f) {
+	f->inicio = 0;
+	f->final= -1;
+	f->qtd = 0;
+}
+
+// Adiciona um elemento na fila
+int enqueue(pfila *f, pestoque t) {
+	if (cheia(f)) {
+		return 0;
+	} else {
+		f->final++;
+		f->base_dados[f->final] = t;
+		f->qtd++;
+		return 1;
+}}
+
+// Remove um elemento da fila
+int dequeue(pfila *f, pestoque *t) {
+	if (vazia(f)) {
+		return 0;
+	} else {
+		*t = f->base_dados[f->inicio];
+		f->inicio++;
+		f->qtd--;
+		return 1;
+}}
+
+//##################################################### FUNCAO ADICIONAR #####################################################
+
 // Adicionar uma nova peca ao estoque
 void adicionar_peca() {
 	char codigo [10];
@@ -133,9 +140,9 @@ void adicionar_peca() {
 	
 	system("cls");
     printf("\n************* Adicionar Peca *************\n\n");
-    printf(" Menu Principal > Adicionar\n\n\n");
+    printf(" Menu Principal > Adicionar\n\n");
     
-	printf("Numero de serie ou codigo da peca: \n");
+	printf("Numero de serie ou codigo da peca: ");
   	//scanf ("%[^\n]%*c", meuEstoque.codigo);
 	fflush(stdin);
 	fgets(codigo, 10, stdin);
@@ -159,66 +166,13 @@ void adicionar_peca() {
 		printf("Fila cheia. Nao ha espaco suficiente.");
 }}
 
-void consulta_codigo(pfila f, char codigo []) {
-	
-	system("cls");
-    printf("\n************* Consultar Peca *************\n\n");
-    printf(" Menu Principal > Consultar > Codigo\n\n\n");
-	
-	while (f.final >= f.inicio) {
-		if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
-			printf("Codigo encontrado... %s \n", f.base_dados[f.inicio].codigo);
-			printf("Posicao... %d \n", f.inicio + 1);      
-		break;
-    } else {
-		printf("Codigo nao existe.");
-    } f.inicio++;
-}}
-
-void consulta_nome(pfila f, char nome []) {
-	
-	system("cls");
-    printf("\n************* Consultar Peca *************\n\n");
-    printf(" Menu Principal > Consultar > Nome\n\n\n");
-	
-	while (f.final >= f.inicio) {
-		if (strcmp (nome, f.base_dados[f.inicio].nome) == 0) {
-			printf("Nome: %s \n", f.base_dados[f.inicio].nome);
-			printf("Posicao... %d \n", f.inicio + 1);
-    break;
-    } else {
-		printf("Nome da peca nao existe.");
-    } f.inicio++;
-}}
-
-void alterar_codigo(pfila f, char codigo []) {
-	
-	system("cls");
-    printf("\n************* Alterar Peca *************\n\n");
-    printf(" Menu Principal > Alterar > Codigo\n\n\n");
-	
-	while (f.final >= f.inicio) {
-		if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
-			char novo_codigo [10];
-			fflush(stdin);
-			printf("Digite o novo codigo da peca: \n");
-			//scanf ("%[^\n]%*c", meuEstoque.codigo);
-			fflush(stdin);
-			fgets(novo_codigo, 10, stdin);
-			strcpy(f.base_dados[f.inicio].codigo, novo_codigo);
-			printf("Codigo alterado com sucesso.");
-			break;
-		} else {
-			printf("Codigo nao foi encontrado.");
-		} f.inicio++;
-}}
+//##################################################### FUNCAO CONSULTAR #####################################################
 
 void lista_pecas(pfila f) {  
 	if (f.final > -1) {
-		
 		system("cls");
     	printf("\n************* Consultar Peca *************\n\n");
-    	printf(" Menu Principal > Consultar > Toda a lista\n\n\n");
+    	printf(" Menu Principal > Consultar > Toda a lista\n\n");
     	
 		while (f.final >= f.inicio) {
 		printf("Posicao: %d\n", f.inicio + 1);
@@ -231,12 +185,34 @@ void lista_pecas(pfila f) {
 		printf("Nao existe nenhum dado no estoque. Fila vazia.");
 }}
 
-// Remove uma nova peca ao estoque
-void remove_peca() {
-	if (dequeue(&minhaAutoPecas, &meuEstoque)) {
-		printf("Peca %s removida do estoque. \n", meuEstoque.nome);
-	} else {
-		printf("Fila vazia. Nao existe nenhuma peca.");
+void consulta_codigo(pfila f, char codigo []) {	
+	system("cls");
+    printf("\n************* Consultar Peca *************\n\n");
+    printf(" Menu Principal > Consultar > Codigo\n\n");
+	
+	while (f.final >= f.inicio) {
+		if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
+			printf("Codigo encontrado... %s\n", f.base_dados[f.inicio].codigo);
+			printf("Posicao... %d\n", f.inicio + 1);      
+		break;
+    } else {
+		printf("Codigo nao existe.");
+    } f.inicio++;
+}}
+
+void consulta_nome(pfila f, char nome []) {	
+	system("cls");
+    printf("\n************* Consultar Peca *************\n\n");
+    printf(" Menu Principal > Consultar > Nome\n\n");
+	
+	while (f.final >= f.inicio) {
+		if (strcmp (nome, f.base_dados[f.inicio].nome) == 0) {
+			printf("Nome: %s \n", f.base_dados[f.inicio].nome);
+			printf("Posicao... %d \n", f.inicio + 1);
+    break;
+    } else {
+		printf("Nome da peca nao existe.");
+    } f.inicio++;
 }}
 
 // Consultar uma peca do estoque
@@ -248,39 +224,84 @@ void consultar() {
 			case 1:
 				lista_pecas(minhaAutoPecas); break;
 			case 2:
-				printf("Procurar por codigo da peca: \n");
+				printf("Procurar pelo codigo da peca: ");
 				char codigo [10];
 				fflush(stdin);
         		fgets(codigo, 10, stdin);
         		consulta_codigo(minhaAutoPecas, codigo);
         		break;
       		case 3:
-        		printf("Procurar por nome da peca: \n");
+        		printf("Procurar pelo nome da peca: ");
         		char nome [20];
         		fflush(stdin);
         		fgets(nome, 20, stdin);
         		consulta_nome(minhaAutoPecas, nome);
         		break;
+        	//case 4: Adicionar a opcao de consultar por marca
     	} printf("\n");
   	} while (op_cons != 0);
 }
 
-// Consultar uma peca do estoque
+//###################################################### FUNCAO ALTERAR ######################################################
+
+void alterar_codigo(pfila f, char codigo []) {	
+	system("cls");
+    printf("\n************* Alterar Peca *************\n\n");
+    printf(" Menu Principal > Alterar > Codigo\n\n");
+	
+	while (f.final >= f.inicio) {
+		if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
+			char novo_codigo [10];
+			fflush(stdin);
+			printf("Digite o novo codigo da peca: ");
+			//scanf ("%[^\n]%*c", meuEstoque.codigo);
+			fflush(stdin);
+			fgets(novo_codigo, 10, stdin);
+			strcpy(f.base_dados[f.inicio].codigo, novo_codigo);
+			printf("Codigo alterado com sucesso.");
+			break;
+		} else {
+			printf("Codigo nao foi encontrado.");
+		} f.inicio++;
+}}
+
+// Alterar uma peca do estoque
 void alterar() {
 	int op_alt;
+	
+	system("cls");
+    printf("\n************* Alterar Peca *************\n\n");
+    printf(" Menu Principal > Alterar\n\n");
+	
 	do {
 		op_alt = menu_alterar();
     	switch(op_alt) {
       		case 1:
-        		printf("Procurar por codigo da peca: \n");
+        		printf("Procurar pelo codigo da peca: ");
         		char codigo [10];
         		fflush(stdin);
         		fgets(codigo, 10, stdin);
         		alterar_codigo(minhaAutoPecas, codigo);
         		break;
+        	//case 2: Adicionar a opcao de alterar o nome
+			//case 3: Adicionar a opcao de alterar a marca
+			//case 4: Adicionar a opcao de alterar a quantidade
+			//case 5: Adicionar a opcao de alterar o preco
     	} printf("\n");
   	} while (op_alt != 0);
 }
+
+//###################################################### FUNCAO REMOVER #####################################################
+
+// Remove uma nova peca ao estoque
+void remove_peca() {
+	if (dequeue(&minhaAutoPecas, &meuEstoque)) {
+		printf("Peca %s removida do estoque. \n", meuEstoque.nome);
+	} else {
+		printf("Fila vazia. Nao existe nenhuma peca.");
+}}
+
+//#################################################### OUTRAS INFORMACOES ####################################################
 
 // Apresentacao do Trabalho
 void apresentacao() {
@@ -300,7 +321,7 @@ void apresentacao() {
     printf("   Lucas Lopes Felipe\n\n");    
 }
 
-//################################################## FUNCAO PRINCIPAL ##################################################
+//##################################################### FUNCAO PRINCIPAL #####################################################
 
 //Funcao principal
 int main() {  
@@ -311,7 +332,8 @@ int main() {
 			case 1: adicionar_peca(); break;
 			case 2: consultar(); break;
           	case 3: alterar(); break;
-      	} printf("\n");
+      	}
+		printf("\n");
       	system("PAUSE");
   	} while (op != 0);
   	apresentacao();
