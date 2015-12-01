@@ -115,6 +115,7 @@ int menu_consultar() {
   printf("   [1] -  Listar todo o estoque  - [1]\n");
   printf("   [2] -   Procurar por Codigo   - [2]\n");
   printf("   [3] -    Procurar por Nome    - [3]\n");
+  printf("   [4] -    Procurar por Marca    - [4]\n");
   printf("   [0] -         Voltar          - [0]\n\n");
   printf("> ");
   scanf("%d", &opcao);
@@ -128,6 +129,10 @@ int menu_alterar() {
   printf("************* Menu de Opcoes *************\n\n");
   printf(" Menu Principal > Alterar\n\n");
   printf("   [1] -   Alterar o Codigo   - [1]\n");
+  printf("   [2] -   Alterar o Nome   - [2]\n");
+  printf("   [3] -   Alterar a Marca   - [3]\n");
+  printf("   [4] -   Alterar a Quantidade   - [4]\n");
+  printf("   [5] -   Alterar o Preco   - [5]\n");
   printf("   [0] -        Voltar        - [0]\n\n");
   printf("> ");
   scanf("%d", &opcao);
@@ -197,6 +202,22 @@ void consulta_nome(pfila f, char nome []) {
   }
 }
 
+void consulta_marca(pfila f, char marca []) {
+  while (f.final >= f.inicio) {
+    if (strcmp (marca, f.base_dados[f.inicio].marca) == 0) {
+      printf("Marca: %s \n", f.base_dados[f.inicio].marca);
+      printf("Posicao... %d \n", f.inicio + 1);
+      
+      break;
+    }
+    else {
+      printf("Nao existe nenhuma peca com essa marca.");
+    }
+    
+    f.inicio++;
+  }
+}
+
 
 void alterar_codigo(pfila f, char codigo []) {
   while (f.final >= f.inicio) {
@@ -213,12 +234,99 @@ void alterar_codigo(pfila f, char codigo []) {
       break;
     }
     else {
-      printf("Codigo nao foi encontrado.");
+      printf("Peca nao foi encontrado.");
     }
     
     f.inicio++;
   }
 }
+
+void alterar_nome(pfila f, char codigo []) {
+  while (f.final >= f.inicio) {
+    if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
+      
+      char novo_nome [20];
+      fflush(stdin);
+      printf("Digite o novo nome da peca: \n");
+      //scanf ("%[^\n]%*c", meuEstoque.codigo);
+      fflush(stdin);
+      fgets(novo_nome, 20, stdin);
+      strcpy(f.base_dados[f.inicio].nome, novo_nome);
+      printf("Nome alterado com sucesso.");
+      break;
+    }
+    else {
+      printf("Peca nao foi encontrado.");
+    }
+    
+    f.inicio++;
+  }
+}
+
+void alterar_marca(pfila f, char codigo []) {
+  while (f.final >= f.inicio) {
+    if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
+      
+      char nova_marca [20];
+      fflush(stdin);
+      printf("Digite a nova marca da peca: \n");
+      //scanf ("%[^\n]%*c", meuEstoque.codigo);
+      fflush(stdin);
+      fgets(nova_marca, 20, stdin);
+      strcpy(f.base_dados[f.inicio].marca, nova_marca);
+      printf("Marca alterada com sucesso.");
+      break;
+    }
+    else {
+      printf("Peca nao foi encontrada.");
+    }
+    
+    f.inicio++;
+  }
+}
+
+void alterar_quantidade(pfila f, char codigo []) {
+  while (f.final >= f.inicio) {
+    if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
+      
+      int nova_qtd;
+      fflush(stdin);
+      printf("Digite a nova quantidade de pecas: \n");
+      scanf ("%d", &meuEstoque.quantidade);
+      fflush(stdin);
+      f.base_dados[f.inicio].quantidade = nova_qtd;
+      printf("Quantidade alterada com sucesso.");
+      break;
+    }
+    else {
+      printf("Peca nao foi encontrada.");
+    }
+    
+    f.inicio++;
+  }
+}
+
+void alterar_preco(pfila f, char codigo []) {
+  while (f.final >= f.inicio) {
+    if (strcmp (codigo, f.base_dados[f.inicio].codigo) == 0) {
+      
+      float novo_preco;
+      fflush(stdin);
+      printf("Digite o novo preco para a peca: \n");
+      scanf ("%f", &meuEstoque.preco);
+      fflush(stdin);
+      f.base_dados[f.inicio].preco = novo_preco;
+      printf("Preco alterado com sucesso.");
+      break;
+    }
+    else {
+      printf("Peca nao foi encontrada.");
+    }
+    
+    f.inicio++;
+  }
+}
+
 
 void lista_pecas(pfila f) {
   
@@ -272,6 +380,14 @@ void consultar() {
         fgets(nome, 20, stdin);
         consulta_nome(minhaAutoPecas, nome);
         break;
+        
+      case 4:
+        printf("Procurar por marca da peca: \n");
+        char marca [20];
+        fflush(stdin);
+        fgets(marca, 20, stdin);
+        consulta_marca(minhaAutoPecas, marca);
+        break;
     }
     printf("\n");
   } while (op_cons != 0);
@@ -280,15 +396,43 @@ void consultar() {
 // Consultar uma peca do estoque
 void alterar() {
   int op_alt;
+  char codigo [10];
   do {
     op_alt = menu_alterar();
     switch(op_alt) {
       case 1:
         printf("Procurar por codigo da peca: \n");
-        char codigo [10];
         fflush(stdin);
         fgets(codigo, 10, stdin);
         alterar_codigo(minhaAutoPecas, codigo);
+        break;
+        
+      case 2:
+        printf("Procurar por codigo da peca: \n");
+        fflush(stdin);
+        fgets(codigo, 10, stdin);
+        alterar_nome(minhaAutoPecas, codigo);
+        break;
+        
+      case 3:
+        printf("Procurar por codigo da peca: \n");
+        fflush(stdin);
+        fgets(codigo, 10, stdin);
+        alterar_marca(minhaAutoPecas, codigo);
+        break;
+        
+      case 4:
+        printf("Procurar por codigo da peca: \n");
+        fflush(stdin);
+        fgets(codigo, 10, stdin);
+        alterar_quantidade(minhaAutoPecas, codigo);
+        break;
+        
+      case 5:
+        printf("Procurar por codigo da peca: \n");
+        fflush(stdin);
+        fgets(codigo, 10, stdin);
+        alterar_preco(minhaAutoPecas, codigo);
         break;
         
     }
